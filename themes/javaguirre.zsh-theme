@@ -47,7 +47,8 @@ prompt_segment() {
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{%k%F{cyan}%}
+$SEGMENT_SEPARATOR"
   else
     echo -n "%{%k%}"
   fi
@@ -61,12 +62,7 @@ prompt_end() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   local user=`whoami`
-
-  if [[ -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[green]%}$user%{$fg[white]%}@%{$fg[red]%}%m"
-  else
-    prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[green]%}$user%{$fg[white]%}@%{$fg[yellow]%}%m"
-  fi
+  prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[red]%}$user%{$fg[white]%}@%{$fg[cyan]%}%m"
 }
 
 # Git: branch/detached head, dirty status
@@ -175,4 +171,6 @@ build_prompt() {
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
-# RPROMPT=''
+if [[ -n "$SSH_CLIENT" ]]; then
+  RPROMPT='%{%F{white}%}[%{%F{red}%}SERVER%{%F{white}%}]'
+fi
