@@ -137,7 +137,7 @@ function last_two_dirs {
 }
 
 prompt_dir() {
-  prompt_segment black blue $(last_two_dirs)
+  prompt_segment black blue '%~'
 }
 
 # Virtualenv: current working virtualenv
