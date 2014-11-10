@@ -26,7 +26,7 @@
 # A few utility functions to make it easy and re-usable to draw segmented prompts
 
 CURRENT_BG='NONE'
-SEGMENT_SEPARATOR=''
+SEGMENT_SEPARATOR='⟩'
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -172,5 +172,7 @@ build_prompt() {
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
 if [[ -n "$SSH_CLIENT" ]]; then
-  RPROMPT='%{%F{white}%}[%{%F{red}%}SERVER%{%F{white}%}]'
+  RPROMPT='[%*]%{%F{white}%}[%{%F{red}%}SERVER%{%F{white}%}]'
+else
+  RPROMPT='[%*]'
 fi
