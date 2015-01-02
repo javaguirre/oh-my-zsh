@@ -36,18 +36,22 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n " %{%F{$CURRENT_BG}%}%{$fg%} "
   else
-    echo -n "%{$bg%}%{$fg%} "
+    echo -n "%{$fg%} "
   fi
   CURRENT_BG=$1
   [[ -n $3 ]] && echo -n $3
 }
 
+prompt_start() {
+  echo -n "$SEGMENT_SEPARATOR$SEGMENT_SEPARATOR"
+}
+
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{%k%F{cyan}%}
+    echo -n " %{%k%F{$CURRENT_BG}%}%{%k%F{cyan}%}
 $SEGMENT_SEPARATOR"
   else
     echo -n "%{%k%}"
@@ -161,6 +165,7 @@ prompt_status() {
 ## Main prompt
 build_prompt() {
   RETVAL=$?
+  prompt_start
   prompt_virtualenv
   prompt_context
   prompt_dir
