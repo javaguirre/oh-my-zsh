@@ -45,7 +45,7 @@ prompt_segment() {
 }
 
 prompt_start() {
-  echo -n "$SEGMENT_SEPARATOR$SEGMENT_SEPARATOR"
+  echo -n "\n\n$SEGMENT_SEPARATOR$SEGMENT_SEPARATOR"
 }
 
 # End the prompt, closing any open segments
